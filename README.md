@@ -10,13 +10,13 @@ DNA sequencing is a popular method to interrogate the genome. However, for appli
 2. In argi-genomics applications (e.g. plant genotyping), researchers would like to study the variants in the functional parts of plant genomes. Plant genomes are generally larger and less than 5% of their genome is functional. WES is a viable alternative, but may require the design and synthesis of probes (and the expenses that come with it)
 3. The study of gene regulation in animal genomes is another example where 10-20% of the genome requires additional focus
 
-The biological questions we seek to answer are: 
+The **biological questions** we seek to answer are: 
 
 *Can CRISPRs be used to remove DNA molecules originating from undesired sections of the genome?*
 
 *Can this, in turn, boost sequencing resolution on target regions of interest?*
 
-In comparison to the design challenges of *in vivo* gene editing, this application requires, perhaps, thousands of CRISPR-gRNAs to deplete a vast majority of nucleic acid molecules. Hence, the bioinformatics challenge is to answer:
+In comparison to the design challenges of *in vivo* gene editing, this application requires, perhaps, thousands of CRISPR-gRNAs to deplete a vast majority of nucleic acid molecules. Hence, the **bioinformatics challenge** is to answer:
 
 *How can we assemble a bioinformatics CRISPR design pipeline with all necessary guardrails that provide gRNAs for in vitro depletion of dsDNA or cDNA molecules in a library preparation process?*
 
