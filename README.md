@@ -2,25 +2,23 @@
 
 Description of bioinformatics pipelines and methods to design CRISPRs for DNA sequencing applications
 
-## The Problem: 
+## The Biological Challenge: 
 
 DNA sequencing is a popular method to interrogate the genome. However, several applications require higher sequencing coverages at targeted sections of the genome. Hence, the use of whole-genome sequencing (WGS) methods poses a few challenges. Here are some examples:
 
 1. For metagenomics studies, the host DNA often dominates sequencing data and dilutes the microbial content for genome assemblies
 2. In argi-genomics applications (e.g. plant genotyping), researchers would like to study the variants in the functional parts of plant genomes. Plant genomes are generally larger and less than 5% of their genome is functional. WES is a viable alternative, but may require the design and synthesis of probes (and the expenses that come with it)
-3. The study of gene regulation in animal genomes is another example where 10-20% of the genome requires additional focus
+3. The study of gene regulation in animal genomes requires researchers to sequence only the regulatory elements identified by ATAC-Seq or other similar methods. Unfortunately, only 10-20% of the genome constitutes elements that are involved in gene regulation. Cell type, environmental stresses and other factors contribute to the variable nature of regulatory elements that makes it harder to design a probe-based capture approach for this application. 
 
-Furthermore, PCR enzymes that amplify adapter-ligated nucleic acid molecules result in a *jackpotting* effect that exorbitantly increases the abundant DNA. The need here is a method that can selectively remove undesirable molecules *prior* to sequencing. To this end, CRISPR endonucleases offer a simple solution. The CRISPR-Cas enzyme fused with a small guide-RNA (gRNA) molecule whose sequence is complementary to the target DNA can offer (arguably) a high degree of specificity in cleaving them. By designing these gRNAs carefully aimed at cleaving only the undesirable DNA after adapter ligation, one can take advantage of clean-up and PCR steps that follow to remove them completely - cDNA molecules cleaved by CRISPRs will not have adapters ligated at their ends and hence, will not be amplified. The result would be a final sequencing library highly enriched with only the target molecules of interest for the application. 
+Furthermore, almost all library preparation methods involve PCR enzymes that amplify adapter-ligated nucleic acid molecules. This results in a *jackpotting* effect exponentially increasing the amount of abundant DNA. The need here is a method that can selectively remove undesirable molecules *prior* to sequencing. To this end, CRISPR endonucleases offer a simple solution. The CRISPR-Cas enzyme fused with a small guide-RNA (gRNA) molecule whose sequence is complementary to the target DNA can offer (arguably) a high degree of specificity in cleaving them. Bioinformatics design pipelines can be developed aimed at generating CRISPR-gRNAs that selectively cleave these undesirable DNA molecules. One can, hence, take advantage of clean-up and PCR steps that follow to remove them completely - cDNA molecules cleaved by CRISPRs will not have adapters ligated at their ends and hence, will not be amplified. The result would be a final sequencing library highly enriched with only the target molecules of interest for the application. 
 
-In order to develop such a method, the **biological questions** we seek to answer are: 
+The uniqueness of the computational challenge in developing this method lies in the number of CRISPR-gRNAs needed. Compared to *in vivo* gene editing, this application requires the use of thousands of CRISPR-gRNAs to deplete a vast majority of nucleic acid molecules in sequencing libraries. Hence, the **bioinformatics challenge** is:
 
-1. *Can CRISPRs be used to remove DNA molecules originating from undesired sections of the genome?*
+*Assemble an integrated bioinformatics CRISPR design and analysis pipeline with all necessary guardrails that provide gRNAs for the in vitro depletion of undesirable DNA in a library preparation process*
 
-2. *Can this, in turn, boost sequencing resolution on target regions of interest?*
+## The Bioinformatics Method:
 
-The uniqueness of the computational challenge in developing this method lies in the number of CRISPR-gRNAs needed. Compared to *in vivo* gene editing, this application requires the use of thousands of CRISPR-gRNAs to deplete a vast majority of nucleic acid molecules in sequencing libraries. Hence, the **bioinformatics challenge** is to answer:
 
-*How can we assemble a bioinformatics CRISPR design pipeline with all necessary guardrails that provide gRNAs for the in vitro depletion of undesirable DNA in a library preparation process?*
 
 Important Notes: 
 
