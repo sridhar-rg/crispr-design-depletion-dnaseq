@@ -1,0 +1,17 @@
+name: crispr_design_dna_seq
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - python=3.10
+  - snakemake
+  - bedtools
+  - openjdk  # For running .jar Java helper tools
+  - samtools # Needed for creating faidx file for reference genome
+  - coreutils
+  - grep
+  - sed
+  - awk
+  - pip
+  - pip:

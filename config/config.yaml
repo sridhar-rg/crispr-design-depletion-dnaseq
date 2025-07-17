@@ -1,0 +1,8 @@
+ref_fasta: "/full/path/to/reference.fa"
+crisflash: "/full/path/to/crisflash_binary"
+pam: "NGG"
+protected_bed: "/full/path/to/protected.bed"
+design_folder: "/full/path/to/design_folder"
+log_folder: "/full/path/to/log_folder"
+tmp_folder: "/full/path/to/tmp_folder"
+helper_tools: "helper_tools"
