@@ -50,6 +50,15 @@ awk '{
 }' reference_genome.fa
 </pre>
 
+BEDTOOLS used in the pipeline requires a genome file (chromosome/fasta headers and chromosome length). You can prepare this file using samtools faidx. 
+
+<pre>
+reference_fasta="/path/to/reference_genome.fa";
+samtools faidx $reference_fasta;
+awk -v FS="\t" -v OFS="\t" '{print $1,$2;}' "${reference_fasta%.fa}.fa.fai" > "${reference_fasta%.fa}" # Creates the genome file
+</pre>
+
+
 ### Step 2: Running the pipeline:
 
 
