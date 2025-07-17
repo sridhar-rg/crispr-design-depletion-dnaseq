@@ -4,26 +4,28 @@ Description of bioinformatics pipelines and methods to design CRISPRs for DNA se
 
 ## The Biological Challenge: 
 
-DNA sequencing is a popular method to interrogate the genome. However, several applications require higher sequencing coverages at targeted sections of the genome. Hence, the use of whole-genome sequencing (WGS) methods poses a few challenges. Here are some examples:
+The versatility offered by DNA sequencing to interrogate the genome is extraordinary. However, the use of whole-genome sequencing (WGS) to study targeted sections of the genome reqire technological modifications to achieve research goals. Since the method produces *uniform* coverage across the genome, several applications fail to fully exploit the power of WGS. For example:
 
-1. For metagenomics studies, the host DNA often dominates sequencing data and dilutes the microbial content for genome assemblies
-2. In argi-genomics applications (e.g. plant genotyping), researchers would like to study the variants in the functional parts of plant genomes. Plant genomes are generally larger and less than 5% of their genome is functional. WES is a viable alternative, but may require the design and synthesis of probes (and the expenses that come with it)
-3. The study of gene regulation in animal genomes requires researchers to sequence only the regulatory elements identified by ATAC-Seq or other similar methods. Unfortunately, only 10-20% of the genome constitutes elements that are involved in gene regulation. Cell type, environmental stresses and other factors contribute to the variable nature of regulatory elements that makes it harder to design a probe-based capture approach for this application. 
+1. For metagenomics studies, the host DNA often dominates sequencing data and dilutes the microbial content for genome assemblies. When the microbial content is minimal, detection of key microbes becomes a challenging task using a DNA-based sequencing approach
+2. In argi-genomics applications (e.g. plant genotyping), researchers would like to study the variants in the functional parts of plant genomes. Plants are polyploids, with larger (and often, incomplete) genomes and less than 5% of their genome is functional. Why would one want to sequence the entire plant genome in an assay that provides <2-3x depth to look at crucial variants? WES is a viable alternative, but may require the design and synthesis of probes (and the expenses that come with it)
+3. The study of gene regulation in animal genomes requires researchers to sequence only the regulatory elements identified by ATAC-Seq or other similar methods. Unfortunately, only 10-20% of the genome is involved in gene regulation. Cell type, environmental stresses and other factors contribute to the variable nature of regulatory elements that makes it harder to design a probe-based capture approach for this application. 
 
 ![Figure 1](figures/FIgure1-schematic_of_dna_prep_crispr_depletion.jpg)
 *Figure 1: Schematic representation of a DNA library preparation methodology with CRISPR-based depletion and examples of some applications when WGS is not a viable method*
 
 Furthermore, almost all library preparation methods involve PCR enzymes that amplify adapter-ligated nucleic acid molecules. This results in a *jackpotting* effect exponentially increasing the amount of abundant DNA. The need here is a method that can selectively remove undesirable molecules *prior* to sequencing. To this end, CRISPR endonucleases offer a simple solution. The CRISPR-Cas enzyme fused with a small guide-RNA (gRNA) molecule whose sequence is complementary to the target DNA can offer (arguably) a high degree of specificity in cleaving them. Bioinformatics design pipelines can be developed aimed at generating CRISPR-gRNAs that selectively cleave these undesirable DNA molecules. One can, hence, take advantage of clean-up and PCR steps that follow to remove them completely - cDNA molecules cleaved by CRISPRs will not have adapters ligated at their ends and hence, will not be amplified. The result would be a final sequencing library highly enriched with only the target molecules of interest for the application. 
 
+## The Bioinformatics Challenge: 
+
 The uniqueness of the computational challenge in developing this method lies in the number of CRISPR-gRNAs needed. Compared to *in vivo* gene editing, this application requires the use of thousands of CRISPR-gRNAs to deplete a vast majority of nucleic acid molecules in sequencing libraries. Hence, the **bioinformatics challenge** is:
 
 *Assemble an integrated bioinformatics CRISPR design and analysis pipeline with all necessary guardrails that provide gRNAs for the in vitro depletion of undesirable DNA in a library preparation process*
 
-## The Bioinformatics Method:
+## The Method:
 
 ### Step 1: Preparing the reference genome(s):
 
-There are many scenarios where CRISPR depletion can be used in DNA sequencing applications. I am going to explain two out of the many I have used this pipeline. 
+There are many scenarios where CRISPR depletion can be used in DNA sequencing applications. I am going to explain, as an example, two out of the many I have used this pipeline. Feel free to modify these for other applications. 
 
 #### Plant Genotyping Studies:
 
@@ -52,6 +54,17 @@ The taxonomy IDs of microorganisms are available and organized based on the huma
 A trickery that I use is to make a concatenated reference genome consisting of the human reference (hg38) and the genomes of microbes I download. You can use the entire human chromosome BEDs as regions that you can deplete. The entirety of the microbial genomes are the ones that will need to be protected. 
 
 For other applications, you can use similar methodology to arrive at a starting point for the design. 
+
+### Step 2: Design CRISPR-gRNAs that specifically deplete the non-essential molecules:
+
+The following are some of the dependencies to run the pipeline provided in this repository:
+
+|#|Software|Source|
+|-|--------|------|
+
+Essentially, it performs the following steps:
+
+1. *Identify all possible CRISPR-gRNA target sites in the genome•: Using CRISPRFLASH, 
 
 Important Notes: 
 
