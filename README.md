@@ -21,7 +21,15 @@ The uniqueness of the computational challenge in developing this method lies in 
 
 ## The Bioinformatics Method:
 
+### Step 1: Preparing the reference genome(s):
 
+There are many scenarios where CRISPR depletion can be used in DNA sequencing applications. I am going to explain three out of the many I have used this pipeline. 
+
+#### Genotyping Studies:
+
+In these applications, the researcher's goal is to do DNA sequencing at lower depth (typically 2-5x, depending upon cost barriers). The goal, as I understand, is to redistribute sequencing *real estate* so that the dataset points at a higher resolution on genetic and other functional elements in the genome. Additionally, some researchers prefer to pool sequencing libraries from different samples after library preparation. Jumpcode Genomics has a specific method they prescribe to do this - however, this is out of the scope of what I am trying to convey here. 
+
+As a bioinformatician, if you are designing the gRNAs for depletion in this application, make sure you download a complete-(ish) reference genome. Most genomics labs working on plant species have their own reference genome assemblies that are often better than what you would find in NCBI FTP. Researchers will also have intervals or GFF files of genes on which they are interested in studying variants. When available use a GFF file, and convert it to a BED file. If possible, remove intronic regions. Depending on the sequencing technology, I recommend protecting ends of the exons (a simple bedtools slop should do this for you). The pipeline refers to this file as protected regions (interchangeably).
 
 Important Notes: 
 
