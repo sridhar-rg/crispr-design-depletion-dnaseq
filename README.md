@@ -58,11 +58,36 @@ samtools faidx $reference_fasta;
 awk -v FS="\t" -v OFS="\t" '{print $1,$2;}' "${reference_fasta%.fa}.fa.fai" > "${reference_fasta%.fa}" # Creates the genome file
 </pre>
 
-
 ### Step 2: Running the pipeline:
 
+To clone the pipeline:
+<pre>
+git clone https://github.com/sridhar-rg/crispr-design-depletion-dnaseq.git
+cd crispr-design-depletion-dnaseq
+</pre>
 
+Set up the environment:
+<pre>
+conda env create -f envs/workflow_wnv.yml
+conda activate crispr_design_dna_seq
+</pre>
 
+Edit the config.yml file to update the paths to files and folders:
+<pre>
+ref_fasta: "/full/path/to/reference.fa"
+crisflash: "/full/path/to/crisflash_binary"
+pam: "NGG"
+protected_bed: "/full/path/to/protected.bed"
+design_folder: "/full/path/to/design_folder"
+log_folder: "/full/path/to/log_folder"
+tmp_folder: "/full/path/to/tmp_folder"
+helper_tools: "helper_tools"
+</pre>
+
+After setting up the reference genome and the bed file containing the regions to be protected, you can run the pipeline by:
+<pre>
+bash scripts/run.sh -h # for usage
+</pre>
 
 ### Application-specific Notes:
 
