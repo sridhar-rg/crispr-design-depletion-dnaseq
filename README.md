@@ -23,7 +23,39 @@ The uniqueness of the computational challenge in developing this method lies in 
 
 ## The Method:
 
+### Dependencies:
+
+|#|Software|Source|
+|-|--------|------|
+|1|<ins>CRISPR design tool</ins>: There are many available as open source. You can even write your own script or repurpose an alignment tool to do this. I have used multiple CRISPR design tools in the last 10 years - [FlashFry](https://github.com/mckennalab/FlashFry), [CRISPOR](https://github.com/maximilianh/crisporWebsite) etc. I recommend CRISFlash for its ease of use and its speed. It is amenable to identify gRNA target sites for any flavor of the CAS enzyme. I have written a few parsers to manipulate output files it provides.|This pipeline uses CRISFlash. It's available from Adrien Jacquin and Margus Lukk's [GitHub](https://github.com/crisflash/crisflash). Download the CRISFlash binary and edit the config.yml with the absolute path to CRISFlash binary. |
+|2|<ins>Bedtools Software Suite</ins>: I use BEDTOOLS to merge, sort and complement intervals in the genome that need to be protected. You can use some of the interval list tools offered by Picard interchangeably. |[BedTools Software Suite](https://bedtools.readthedocs.io/en/latest/content/bedtools-suite.html) - Best practice is to install within a conda environment. |
+|3|<ins>Java Runtime Environment (JRE) or Java Development Kit (JDK) to run a few helper scripts.|The `workflow_env.yml` file lists the dependencies required for the pipeline. |
+|4|Python and Snakemake|Use conda to install the correct versions|
+
+Samtools or PicardTools is always a good tool to have in your arsenal.
+
 ### Step 1: Preparing the reference genome(s):
+
+CRISFlash requires the reference the genome in a very specific condition. Soft-masked DNA and IUPAC ambiguous DNA letters cause issues while running CRISFlash. I have also observed issues when fasta headers in the reference genomes are too long. To avoid this:
+
+<pre>
+sed -i "s/ .*//g" reference_genome.fa # fixes spaces and removes fasta headers with spaces in them
+
+awk '{
+    if ($0 ~ /^>/) {
+        print $0; # Prints the fasta header as is
+    } else {
+        gsub (/[^ACGTacgt]/, "N"); # Replaces IUPAC DNA letters with Ns
+    }
+}' reference_genome.fa
+</pre>
+
+### Step 2: Running the pipeline:
+
+
+
+
+### Application-specific Notes:
 
 There are many scenarios where CRISPR depletion can be used in DNA sequencing applications. I am going to explain, as an example, two out of the many I have used this pipeline. Feel free to modify these for other applications. 
 
@@ -55,24 +87,7 @@ A trickery that I use is to make a concatenated reference genome consisting of t
 
 For other applications, you can use similar methodology to arrive at a starting point for the design. 
 
-### Step 2: Design CRISPR-gRNAs that specifically deplete the non-essential molecules:
-
-The following are some of the dependencies to run the pipeline provided in this repository:
-
-|#|Software|Source|
-|-|--------|------|
-|1|<ins>CRISPR design tool</ins>: There are many available as open source. You can even write your own script or repurpose an alignment tool to do this. I have used multiple CRISPR design tools in the last 10 years - [FlashFry](https://github.com/mckennalab/FlashFry), [CRISPOR](https://github.com/maximilianh/crisporWebsite) etc. I recommend CRISFlash for its ease of use and its speed. It is amenable to identify gRNA target sites for any flavor of the CAS enzyme. I have written a few parsers to manipulate output files it provides.|This pipeline uses CRISFlash. It's available from Adrien Jacquin and Margus Lukk's [GitHub](https://github.com/crisflash/crisflash). Download the CRISFlash binary and edit the config.yml with the absolute path to CRISFlash binary. |
-|2|<ins>Bedtools Software Suite</ins>: I use BEDTOOLS to merge, sort and complement intervals in the genome that need to be protected. You can use some of the interval list tools offered by Picard interchangeably. |[BedTools Software Suite](https://bedtools.readthedocs.io/en/latest/content/bedtools-suite.html) - Best practice is to install within a conda environment. |
-|3|<ins>Java Runtime Environment (JRE) or Java Development Kit (JDK) to run a few helper scripts.|The `config.yml` file lists the environment in the pipeline. Install according to instructions provided by Oracle. |
-|4|Python and Snakemake|Use conda to install the correct versions|
-
-Samtools or PicardTools is always a good tool to have in your arsenal.
-
-Essentially, it performs the following steps:
-
-1. *Identify all possible CRISPR-gRNA target sites in the genome•: Using CRISPRFLASH, 
-
-Important Notes: 
+#### Notes about the methodology: 
 
 1. The DASH (https://genomebiology.biomedcentral.com/articles/10.1186/s13059-016-0904-5) methodology introduced by Gu *et* *al* (2016) uses a similar technique to deplete mitochondrial rRNA in HeLa cells. 
 
