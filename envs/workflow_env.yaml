@@ -14,4 +14,3 @@ dependencies:
   - sed
   - awk
   - pip
-  - pip:

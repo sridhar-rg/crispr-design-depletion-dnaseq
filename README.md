@@ -63,6 +63,10 @@ The following are some of the dependencies to run the pipeline provided in this 
 |-|--------|------|
 |1|<ins>CRISPR design tool</ins>: There are many available as open source. You can even write your own script or repurpose an alignment tool to do this. I have used multiple CRISPR design tools in the last 10 years - [FlashFry](https://github.com/mckennalab/FlashFry), [CRISPOR](https://github.com/maximilianh/crisporWebsite) etc. I recommend CRISFlash for its ease of use and its speed. It is amenable to identify gRNA target sites for any flavor of the CAS enzyme. I have written a few parsers to manipulate output files it provides.|This pipeline uses CRISFlash. It's available from Adrien Jacquin and Margus Lukk's [GitHub](https://github.com/crisflash/crisflash). Download the CRISFlash binary and edit the config.yml with the absolute path to CRISFlash binary. |
 |2|<ins>Bedtools Software Suite</ins>: I use BEDTOOLS to merge, sort and complement intervals in the genome that need to be protected. You can use some of the interval list tools offered by Picard interchangeably. |[BedTools Software Suite](https://bedtools.readthedocs.io/en/latest/content/bedtools-suite.html) - Best practice is to install within a conda environment. |
+|3|<ins>Java Runtime Environment (JRE) or Java Development Kit (JDK) to run a few helper scripts.|The `config.yml` file lists the environment in the pipeline. Install according to instructions provided by Oracle. |
+|4|Python and Snakemake|Use conda to install the correct versions|
+
+Samtools or PicardTools is always a good tool to have in your arsenal.
 
 Essentially, it performs the following steps:
 
