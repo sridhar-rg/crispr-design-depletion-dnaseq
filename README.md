@@ -23,13 +23,35 @@ The uniqueness of the computational challenge in developing this method lies in 
 
 ### Step 1: Preparing the reference genome(s):
 
-There are many scenarios where CRISPR depletion can be used in DNA sequencing applications. I am going to explain three out of the many I have used this pipeline. 
+There are many scenarios where CRISPR depletion can be used in DNA sequencing applications. I am going to explain two out of the many I have used this pipeline. 
 
-#### Genotyping Studies:
+#### Plant Genotyping Studies:
 
-In these applications, the researcher's goal is to do DNA sequencing at lower depth (typically 2-5x, depending upon cost barriers). The goal, as I understand, is to redistribute sequencing *real estate* so that the dataset points at a higher resolution on genetic and other functional elements in the genome. Additionally, some researchers prefer to pool sequencing libraries from different samples after library preparation. Jumpcode Genomics has a specific method they prescribe to do this - however, this is out of the scope of what I am trying to convey here. 
+Goal: 
 
-As a bioinformatician, if you are designing the gRNAs for depletion in this application, make sure you download a complete-(ish) reference genome. Most genomics labs working on plant species have their own reference genome assemblies that are often better than what you would find in NCBI FTP. Researchers will also have intervals or GFF files of genes on which they are interested in studying variants. When available use a GFF file, and convert it to a BED file. If possible, remove intronic regions. Depending on the sequencing technology, I recommend protecting ends of the exons (a simple bedtools slop should do this for you). The pipeline refers to this file as protected regions (interchangeably).
+Design a CRISPR-based depletion method that can be incorporated in DNA sequencing libraries that:
+1. Deplete non-functional elements (e.g. repetitive elements, LTRs, SINEs) of the genome
+2. Conserve / protect genetic and other functional elements 
+
+In these applications, sequencing is performed at lower depth (typically 2-5x, depending upon the ploidy and cost barriers). The goal is to redistribute sequencing coverage so that the dataset have a higher resolution on genetic and other functional elements in the genome. 
+
+As a bioinformatician, make sure you download a complete-(ish) reference genome for the plant. Some genomics labs working on plant species have their own reference genome assemblies that are often better than what you would find in NCBI FTP. Researchers will also have intervals or GFF files of genes they are interested. When available use a GFF file, and convert it to a BED file. If possible, remove intronic regions. Depending on the sequencing technology, I recommend protecting ends of the exons (a simple bedtools slop should do this for you). The pipeline refers to this file as protected regions (interchangeably).
+
+Additionally, some researchers prefer to pool sequencing libraries from different samples after library preparation. Jumpcode Genomics has a specific method they prescribe to do this - however, this is out of the scope of what I am trying to convey here. 
+
+#### Metagenomics Analysis of Complex Human Tissue Types:
+
+Goal: 
+
+The CRISPR-based depletion method you are designing should:
+1. Deplete, as much as possible, the human-derived DNA molecules in the library (with high specificity)
+2. Enrich the nucleic acid molecules originating from microbial organisms
+
+The taxonomy IDs of microorganisms are available and organized based on the human tissue-type they can be detected in many databases (e.g. mBodyMap, HOMD etc.). You can use `assembly_summary_refseq.txt` from [NCBI](http://ftp.ncbi.nlm.nih.gov/genomes/refseq/assembly_summary_refseq.txt) to script querying taxonomy IDs and the links to download their reference genome files. 
+
+A trickery that I use is to make a concatenated reference genome consisting of the human reference (hg38) and the genomes of microbes I download. You can use the entire human chromosome BEDs as regions that you can deplete. The entirety of the microbial genomes are the ones that will need to be protected. 
+
+For other applications, you can use similar methodology to arrive at a starting point for the design. 
 
 Important Notes: 
 
