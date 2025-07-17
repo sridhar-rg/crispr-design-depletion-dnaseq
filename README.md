@@ -33,7 +33,7 @@ Design a CRISPR-based depletion method that can be incorporated in DNA sequencin
 1. Deplete non-functional elements (e.g. repetitive elements, LTRs, SINEs) of the genome
 2. Conserve / protect genetic and other functional elements 
 
-In these applications, sequencing is performed at lower depth (typically 2-5x, depending upon the ploidy and cost barriers). The goal is to redistribute sequencing coverage so that the dataset have a higher resolution on genetic and other functional elements in the genome. 
+In these applications, sequencing is performed at lower depth (typically 2-5x, depending upon the ploidy and cost barriers). The goal is to redistribute sequencing coverage so that the dataset have a higher resolution on genetic and other functional elements in the genome. Here is a [published methodology](https://pubmed.ncbi.nlm.nih.gov/37127332/) where I helped researchers design the assay. 
 
 As a bioinformatician, make sure you download a complete-(ish) reference genome for the plant. Some genomics labs working on plant species have their own reference genome assemblies that are often better than what you would find in NCBI FTP. Researchers will also have intervals or GFF files of genes they are interested. When available use a GFF file, and convert it to a BED file. If possible, remove intronic regions. Depending on the sequencing technology, I recommend protecting ends of the exons (a simple bedtools slop should do this for you). The pipeline refers to this file as protected regions (interchangeably).
 
