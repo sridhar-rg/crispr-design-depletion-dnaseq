@@ -61,6 +61,8 @@ samtools faidx $reference_fasta;
 awk -v FS="\t" -v OFS="\t" '{print $1,$2;}' "${reference_fasta%.fa}.fa.fai" > "${reference_fasta%.fa}" # Creates the genome file
 </pre>
 
+Use bedtools or picard to sort the BED file for the protected regions. 
+
 ### Step 2: Running the pipeline:
 
 To clone the pipeline:
@@ -89,8 +91,14 @@ helper_tools: "helper_tools"
 
 After setting up the reference genome and the bed file containing the regions to be protected, you can run the pipeline by:
 <pre>
+chmod +x scripts/run.sh
 bash scripts/run.sh -h # for usage
 </pre>
+
+### Workflow:
+
+![Figure 2](figures/Pipeline_DAG.jpg)
+*Figure 2: Steps in the pipeline*
 
 ### Application-specific Notes:
 
