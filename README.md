@@ -1,20 +1,13 @@
-<style>
-r { color: Red }
-o { color: Orange }
-g { color: Green }
-b { colot: Blue }
-</style>
-
 # CRISPR Design for Depletion of Abundant Molecules in DNA Sequencing Applications
 
 Description of bioinformatics pipelines and methods to design CRISPRs for DNA sequencing applications
 
 ## The Biological Challenge: 
 
-The versatility offered by DNA sequencing to interrogate the genome is extraordinary. However, the use of whole-genome sequencing (WGS) to study targeted sections of genomes is an overkill. Firstly, the method produces sequencing datasets with a *uniform* coverage across the genome. This amounts to wastage of sequencing reagents and data when only a fraction of the genome is of interest to your research goals. Secondly, WGS produces <5x coverage for larger genomes (compared to the human genome) and those that are polyploids which makes it difficult for genotyping and variant analysis. Therefore, these and several other applications fail to fully exploit the power of WGS. More examples:
+The versatility offered by DNA sequencing to interrogate the genome is unparalleled. However, the use of whole-genome sequencing (WGS) to study targeted sections of genomes presents some challenges. Firstly, the method produces sequencing datasets with a *uniform* coverage across the genome. This amounts to wastage of sequencing reagents and data when only a fraction of the genome is of interest to your research goals. Secondly, WGS produces lower coverages for larger genomes (compared to the human genome) and those that are polyploids which makes it difficult for genotyping and variant analysis. Therefore, these and several other applications fail to fully exploit the power of WGS. More examples:
 
 1. For metagenomics studies, the host DNA often dominates sequencing data and dilutes the microbial content for genome assemblies. When the microbial content is minimal, detection of key microbes becomes a challenging task using a DNA-based sequencing approach
-2. In argi-genomics applications (e.g. plant genotyping), researchers would like to study the variants in the functional parts of plant genomes. Plants are polyploids, with larger (and often, incomplete) genomes and less than 5% of their genome is functional. Why would one want to sequence the entire plant genome in an assay that provides <2-3x depth to look at crucial variants? WES is a viable alternative, but may require the design and synthesis of probes (and the expenses that come with it)
+2. In argi-genomics applications (e.g. plant genotyping), researchers would like to study the variants in the functional parts of plant genomes. They resort to low-pass WGS (LP-WGS) or Genotyping-By-Sequencing studies where the coverage is typically <3x across the genome. Plants are polyploids, with larger (and often, incomplete) genomes and less than 5% of their genome is functional. The presence of repetitive elements (typically 45-70% of the genome) overrepresents sequencing datasets diluting the ability to uncover variants in genes. Whole-Exome Sequencing (WES) is a viable alternative, but may require the design and synthesis of probes (and the expenses that come with it)
 3. The study of gene regulation in animal genomes requires researchers to sequence only the regulatory elements identified by ATAC-Seq or other similar methods. Unfortunately, only 10-20% of the genome is involved in gene regulation. Cell type, environmental stresses and other factors contribute to the variable nature of regulatory elements that makes it harder to design a probe-based capture approach for this application. 
 
 ![Figure 1](figures/FIgure1-schematic_of_dna_prep_crispr_depletion.jpg)
@@ -52,9 +45,9 @@ sed -i "s/ .*//g" reference_genome.fa # fixes spaces and removes fasta headers w
 
 awk '{
     if ($0 ~ /^>/) {
-        print $0; <b># Prints the fasta header as is</b>
+        print $0; # Prints the fasta header as is
     } else {
-        gsub (/[^ACGTacgt]/, "N"); <b># Replaces IUPAC DNA letters with Ns</b>
+        gsub (/[^ACGTacgt]/, "N"); # Replaces IUPAC DNA letters with Ns
     }
 }' reference_genome.fa
 </pre>
