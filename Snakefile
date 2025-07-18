@@ -5,18 +5,18 @@ import os
 from pathlib import Path
 from util.snakemake_util import SNAKEFILE_DIR
 
-configfile: "config/config.yml"
+configfile: "config/config.yml" # Alternatively, pass or override configurations manually
 
-# Alternatively, pass or override configurations manually
+ref_fasta=config['ref_fasta']               # path to reference genome fasta
+crisflash=config['crisflash']               # path to crisflash executable
+pam=config['pam']                           # PAM site for gRNA target (e.g. NGG, NAG)
+protected_bed=config['protected_bed']       # path to bed file containing protected regions in the genome
+design_folder=config['design_folder']       # path to design output folder
+log_folder=config['log_folder']             # path to log folder
+tmp_folder=config['tmp_folder']             # path to tmp folder
+helper_tools=config['helper_tools']         # path to folder containing helper tools
 
-# ref_fasta=config['ref_fasta']               # path to reference genome fasta
-# crisflash=config['crisflash']               # path to crisflash executable
-# pam=config['pam']                           # PAM site for gRNA target (e.g. NGG, NAG)
-# protected_bed=config['protected_bed']       # path to bed file containing protected regions in the genome
-# design_folder=config['design_folder']       # path to design output folder
-# log_folder=config['log_folder']             # path to log folder
-# tmp_folder=config['tmp_folder']             # path to tmp folder
-# helper_tools=config['helper_folder']        # path to folder containing helper tools
+# Precomputing file path before
 
 rule all:
     input:
@@ -32,7 +32,7 @@ rule master_guide_list:
     input:
         fasta = ref_fasta
     output:
-        bed = lambda wildcards: os.path.join(
+        bed = os.path.join(
             design_folder,
             os.path.basename(ref_fasta.replace(".fa", ".crisflash.ngg.bed"))
         )
@@ -56,7 +56,7 @@ rule make_protected_regions_masked_fasta:
         fasta = ref_fasta,
         genome = lambda wildcards: ref_fasta.replace(".fa", ".genome")
     output:
-        masked = lambda wildcards: os.path.join(
+        masked = os.path.join(
             design_folder, 
             os.path.basename(ref_fasta.replace(".fa", ".protected_regions.masked.fa"))
         )
@@ -75,12 +75,12 @@ rule get_initial_guide_list:
     #           Note: There may be guides that will (also) target protected regions
     #                 which will be handled at a later step
     input:
-        fasta = lambda wildcards: os.path.join(
+        fasta = os.path.join(
             design_folder, 
             os.path.basename(ref_fasta.replace(".fa", ".protected_regions.masked.fa"))
         )
     output:
-        bed = lambda wildcards: os.path.join(
+        bed = os.path.join(
             design_folder, 
             os.path.basename(ref_fasta.replace(".fa", ".initial_depletion_targets.bed"))
         )
