@@ -48,6 +48,7 @@ awk '{
         print $0; # Prints the fasta header as is
     } else {
         gsub (/[^ACGTacgt]/, "N"); # Replaces IUPAC DNA letters with Ns
+        print;
     }
 }' reference_genome.fa
 </pre>
