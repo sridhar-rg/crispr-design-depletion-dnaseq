@@ -17,7 +17,9 @@ Furthermore, almost all library preparation methods involve PCR enzymes that amp
 
 ## The Bioinformatics Challenge: 
 
-The uniqueness of the computational challenge in developing this method lies in the number of CRISPR-gRNAs needed. Compared to *in vivo* gene editing, this application requires the use of thousands of CRISPR-gRNAs to deplete a vast majority of nucleic acid molecules in sequencing libraries. Hence, the **bioinformatics challenge** is:
+The uniqueness of the computational challenge in developing this method lies in the number of CRISPR-gRNAs needed. Compared to *in vivo* gene editing, this application requires the use of thousands of CRISPR-gRNAs to deplete a vast majority of nucleic acid molecules in sequencing libraries. 
+
+Additionally, the CRISPR-Cas enzyme is known to exhibit non-specific cutting on dsDNA that shares homology with the 20-nt gRNA target sequence. Any application that uses CRISPRs will have to consider bioinformatics methods to mitigate off-target effects. Hence, the **bioinformatics challenge** is:
 
 *Assemble an integrated bioinformatics CRISPR design and analysis pipeline with all necessary guardrails that provide gRNAs for the in vitro depletion of undesirable DNA in a library preparation process*
 
