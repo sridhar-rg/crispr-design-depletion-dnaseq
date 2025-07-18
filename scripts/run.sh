@@ -9,6 +9,8 @@
 
 set -eo pipefail;
 
+cpu=$(grep processor /proc/cpuinfo | tail -n 1 | awk '{print $3+1}');
+
 usage() {
   cat >&2 << EOF
   Usage: bash $0 [options]
@@ -67,6 +69,7 @@ mkdir -p $ref_folder/snk_tmp;
 
 snakemake \
   --shadow-prefix $ref_folder/snk_tmp \
+  --cores $cpu \
 #  --configfile config/config.yml \
   --config ref_fasta=$ref_fasta crisflash=$crisflash protected_bed=$protected_bed design_folder=$design_folder log_folder=$log_folder tmp_folder=$tmp_folder \
   --restart-times 1 \
