@@ -216,7 +216,7 @@ rule get_offtarget_filtered_guides:
 
 rule collate_offtarget_filtered_guides:
     input:
-        offtarget_filtered_guides = os.path.join(
+        guides = offtarget_filtered_guides = os.path.join(
             design_folder, 
             os.path.basename(ref_fasta.replace(".fa", ".off_target_filtered.txt"))
         ),
