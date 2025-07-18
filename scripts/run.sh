@@ -64,7 +64,7 @@ ref_folder=$(dirname $ref_fasta | xargs realpath);
 mkdir -p $ref_folder/$design_folder;
 mkdir -p $ref_folder/$log_folder;
 
-snakefile="Snakefile"; # modify this to point to the snakefile
+snakefile="../Snakefile"; # modify this to point to the snakefile
 mkdir -p $ref_folder/snk_tmp;
 
 snakemake \
