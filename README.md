@@ -1,3 +1,10 @@
+<style>
+r { color: Red }
+o { color: Orange }
+g { color: Green }
+b { colot: Blue }
+</style>
+
 # CRISPR Design for Depletion of Abundant Molecules in DNA Sequencing Applications
 
 Description of bioinformatics pipelines and methods to design CRISPRs for DNA sequencing applications
@@ -45,9 +52,9 @@ sed -i "s/ .*//g" reference_genome.fa # fixes spaces and removes fasta headers w
 
 awk '{
     if ($0 ~ /^>/) {
-        print $0; # Prints the fasta header as is
+        print $0; <b># Prints the fasta header as is</b>
     } else {
-        gsub (/[^ACGTacgt]/, "N"); # Replaces IUPAC DNA letters with Ns
+        gsub (/[^ACGTacgt]/, "N"); <b># Replaces IUPAC DNA letters with Ns</b>
     }
 }' reference_genome.fa
 </pre>
