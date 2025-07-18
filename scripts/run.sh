@@ -66,6 +66,7 @@ mkdir -p $ref_folder/$log_folder;
 
 snakefile="../Snakefile"; # modify this to point to the snakefile
 mkdir -p $ref_folder/snk_tmp;
+cd "$(cd "( $dirname "${BASH_SOURCE[0]}" )"/.. && pwd )";
 
 snakemake \
   --shadow-prefix $ref_folder/snk_tmp \
