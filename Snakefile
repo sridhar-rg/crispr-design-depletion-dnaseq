@@ -16,8 +16,6 @@ log_folder=config['log_folder']             # path to log folder
 tmp_folder=config['tmp_folder']             # path to tmp folder
 helper_tools=config['helper_tools']         # path to folder containing helper tools
 
-# Precomputing file path before
-
 rule all:
     input:
         os.path.join(
@@ -54,7 +52,7 @@ rule make_protected_regions_masked_fasta:
     input:
         bed = protected_bed,
         fasta = ref_fasta,
-        genome = lambda wildcards: ref_fasta.replace(".fa", ".genome")
+        genome = ref_fasta.replace(".fa", ".genome")
     output:
         masked = os.path.join(
             design_folder, 
@@ -96,7 +94,7 @@ rule get_initial_guide_list:
 
 rule filter_sequence_complexity:
     input: 
-        bed = lambda wildcards: os.path.join(
+        bed = os.path.join(
             design_folder, 
             os.path.basename(ref_fasta.replace(".fa", ".initial_depletion_targets.bed"))
         )
@@ -107,7 +105,7 @@ rule filter_sequence_complexity:
         dint_max = 4,
         tool = os.path.join(helper_tools, "CrisFlashUtilsFilterGenomeGuidesBySequenceComplexity.jar")
     output:
-        bed = lambda wildcards: os.path.join(
+        bed = os.path.join(
             design_folder, 
             os.path.basename(ref_fasta.replace(".fa", ".sequence_complexity_filtered.bed"))
         )
@@ -130,12 +128,12 @@ rule filter_sequence_complexity:
 
 rule convert_guide_to_fasta:
     input: 
-        bed = lambda wildcards: os.path.join(
+        bed = os.path.join(
             design_folder, 
             os.path.basename(ref_fasta.replace(".fa", ".sequence_complexity_filtered.bed"))
         )
     output:
-        fasta = lambda wildcards: os.path.join(
+        fasta = os.path.join(
             design_folder, 
             os.path.basename(ref_fasta.replace(".fa", ".sequence_complexity_filtered.fa"))
         )
@@ -152,9 +150,9 @@ rule make_depletion_mask_fasta:
     input:
         bed = protected_bed,
         fasta = ref_fasta,
-        genome = lambda wildcards: ref_fasta.replace(".fa", ".genome")
+        genome = ref_fasta.replace(".fa", ".genome")
     output:
-        masked = lambda wildcards: os.path.join(
+        masked = os.path.join(
             design_folder, 
             os.path.basename(ref_fasta.replace(".fa", ".depleted_regions.masked.fa"))
         )
@@ -170,11 +168,11 @@ rule make_depletion_mask_fasta:
 
 rule filter_offtargets:
     input: 
-        offtarget_fasta = lambda wildcards: os.path.join(
+        offtarget_fasta = os.path.join(
             design_folder, 
             os.path.basename(ref_fasta.replace(".fa", ".depleted_regions.masked.fa"))
         ),
-        candidate_guide_fasta = lambda wildcards: os.path.join(
+        candidate_guide_fasta = os.path.join(
             design_folder, 
             os.path.basename(ref_fasta.replace(".fa", ".sequence_complexity_filtered.fa"))
         )
@@ -184,7 +182,7 @@ rule filter_offtargets:
         mismatch_max = 3,
         threads = 10    
     output:
-        bed = lambda wildcards: os.path.join(
+        bed = os.path.join(
             design_folder, 
             os.path.basename(ref_fasta.replace(".fa", ".off_target.bed"))
         )
@@ -198,14 +196,14 @@ rule filter_offtargets:
 
 rule get_offtarget_filtered_guides:
     input:
-        bed = lambda wildcards: os.path.join(
+        bed = os.path.join(
             design_folder, 
             os.path.basename(ref_fasta.replace(".fa", ".off_target.bed"))
         )
     params:
         tool = os.path.join(helper_tools, "identify_guides_with_no_offtargets.sh")
     output:
-        guides = lambda wildcards: os.path.join(
+        guides = os.path.join(
             design_folder, 
             os.path.basename(ref_fasta.replace(".fa", ".off_target_filtered.txt"))
         )
@@ -218,16 +216,16 @@ rule get_offtarget_filtered_guides:
 
 rule collate_offtarget_filtered_guides:
     input:
-        offtarget_filtered_guides = lambda wildcards: os.path.join(
+        offtarget_filtered_guides = os.path.join(
             design_folder, 
             os.path.basename(ref_fasta.replace(".fa", ".off_target_filtered.txt"))
         ),
-        genome_guides = lambda wildcards: os.path.join(
+        genome_guides = os.path.join(
             design_folder,
             os.path.basename(ref_fasta.replace(".fa", ".crisflash.ngg.bed"))
         )
     output:
-        bed = lambda wildcards: os.path.join(
+        bed = os.path.join(
             design_folder, 
             os.path.basename(ref_fasta.replace(".fa", ".off_target_filtered.bed"))
         )
@@ -247,9 +245,9 @@ rule make_depletion_interval_bed:
     input:
         bed = protected_bed,
         fasta = ref_fasta,
-        genome = lambda wildcards: ref_fasta.replace(".fa", ".genome")
+        genome = ref_fasta.replace(".fa", ".genome")
     output:
-        bed = lambda wildcards: os.path.join(
+        bed = os.path.join(
             design_folder, 
             os.path.basename(ref_fasta.replace(".fa", ".depletion_regions.bed"))
         )
@@ -262,16 +260,16 @@ rule make_depletion_interval_bed:
 
 rule distance_filter_guides:
     input:
-        guide_bed = lambda wildcards: os.path.join(
+        guide_bed = os.path.join(
             design_folder, 
             os.path.basename(ref_fasta.replace(".fa", ".off_target_filtered.bed"))
         ),
-        depleted_region_bed = lambda wildcards: os.path.join(
+        depleted_region_bed = os.path.join(
             design_folder, 
             os.path.basename(ref_fasta.replace(".fa", ".depletion_regions.bed"))
         ) 
     output:
-        bed = lambda wildcards: os.path.join(
+        bed = os.path.join(
             design_folder, 
             os.path.basename(ref_fasta.replace(".fa", ".distance_filtered.bed"))
         )
